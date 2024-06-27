@@ -78,7 +78,7 @@ function vidas() {
 
 function textosIniciales() {
     htmlTxtUpdate('titulo', 'Numero Secreto');
-    htmlTxtUpdate('reglamento', "Vidas iniciales 3 <br/> Por cada acierto en el primer intento suma una vida y 3 puntos extras <br /> Cada asierto suma 1 punto <br />");
+    htmlTxtUpdate('reglamento', "Vidas iniciales 3 <br/> Por cada acierto en el primer intento suma una vida y 3 puntos extras <br /> Cada acierto suma 1 punto <br />");
     htmlTxtUpdate('texto-parrafo', `Indica un numero del 1 al ${maximoNro}`);
 }
 
@@ -108,7 +108,7 @@ function juegoTerminado() {
     document.getElementById('reiniciar').removeAttribute('disabled');
     document.getElementById('intentar').disabled=true
     htmlTxtUpdate('vidas', `<h3 class="--bs-warning">GAME OVER</h3>`);
-    htmlTxtUpdate('texto-parrafo', `Se acabaron tus ${vidasDisponibles} itentos`);
+    htmlTxtUpdate('texto-parrafo', `Se esfumaron tus ${vidasDisponibles} intentos`);
     htmlImgUpdate("meme","img/game-over.png");
 }
 
