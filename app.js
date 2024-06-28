@@ -107,6 +107,7 @@ function juegoTerminado() {
     //restableciendo opciones
     document.getElementById('reiniciar').removeAttribute('disabled');
     document.getElementById('intentar').disabled = true
+
     htmlTxtUpdate('vidas', `<h3 class="--bs-warning">GAME OVER</h3>`);
     htmlTxtUpdate('texto-parrafo', `Se esfumaron tus ${vidasDisponibles} intentos`);
     htmlImgUpdate("meme", "img/game-over.png");
@@ -192,6 +193,9 @@ function parametrosIniciales() {
     generarNumeroSecreto();
     vidas();
 }
+
+
+
 
 
 juego();
