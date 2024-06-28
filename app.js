@@ -31,13 +31,26 @@ function htmlImgCreator(idContenedor, url) {
 }
 
 
-function htmlImgCreatorPlus(idContenedor, url, ancho, alto) {
+function htmlImgCreatorPus(idContenedor, url, ancho, alto) {
     let imagen = document.createElement("img");
     imagen.src = url;
     imagen.width = ancho;
     imagen.height = alto;
+    imagen.tagName = "vida-img";
     document.getElementById(idContenedor).appendChild(imagen);
 }
+
+function htmlRemoveContDIV(idDiv, tipoElemento) {
+    let div = document.getElementById(idDiv);
+
+    // Obtener la primera imagen dentro del div
+    let img = div.getElementsByTagName(tipoElemento)[0]; 
+    if (img) {
+        div.removeChild(img);
+    }
+}
+
+
 
 // MICROS
 
@@ -65,6 +78,8 @@ function limpiarCampo() {
 function resetMeme() {
     htmlImgUpdate("meme", "img/intriga.png");
     htmlTxtUpdate('horaactual', '');
+    htmlRemoveContDIV('imghuev','img');
+
 }
 
 
@@ -81,6 +96,9 @@ function vidas() {
 function horaActual() {
     let date = new Date();
     htmlTxtUpdate('horaactual', `<h3>¿Te parece? ${(date.getHours == 1 ) ? 'Es la' : 'son las'}  ${date.getHours()} : ${date.getMinutes()}</h3>`);
+    htmlImgUpdate("meme","");
+    htmlImgCreator("imghuev", "img/hueviando.jpg");
+
 }
 
 
@@ -203,6 +221,7 @@ function parametrosIniciales() {
     htmlTxtUpdate('score', `${puntosTotales}`);
 
 
+    document.getElementById('score').value = '';
     document.getElementById('score').value = '';
     document.getElementById('intentar').disabled = false;
     document.getElementById('reiniciar').disabled = true;
