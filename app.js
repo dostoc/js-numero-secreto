@@ -3,9 +3,10 @@ let numeroSecreto = 0;
 let numeroSecretoList = [];
 let vidasDisponibles = 0;
 let puntosTotales = 0;
+let primeraRonda = true;
 
 // numero de jugadas no repetibles..{1,2,3,4,5,6,7,8,9};
-let maximoNro = 9; 
+let maximoNro = 9;
 
 // HTML Intermediarios
 
@@ -51,12 +52,10 @@ function descontarVida() {
 
 function agregarVida() {
     vidasDisponibles++;
-    htmlImgUpdate("meme","img/bravo.jpeg")
+    htmlImgUpdate("meme", "img/bravo.jpeg")
     vidas();
     console.log(`vidasDisponibles: ${vidasDisponibles}`);
 }
-
-
 
 function limpiarCampo() {
     document.querySelector('#valorUsuario').value = '';
@@ -65,6 +64,7 @@ function limpiarCampo() {
 
 function resetMeme() {
     htmlImgUpdate("meme", "img/intriga.png");
+    htmlTxtUpdate('horaactual', '');
 }
 
 
@@ -77,6 +77,13 @@ function vidas() {
     }
 
 }
+
+function horaActual() {
+    let date = new Date();
+    htmlTxtUpdate('horaactual', `<h3>¿Te parece? ${(date.getHours == 1 ) ? 'Es la' : 'son las'}  ${date.getHours()} : ${date.getMinutes()}</h3>`);
+}
+
+
 
 // TEXTOS
 
@@ -104,20 +111,27 @@ function juego() {
 }
 
 function juegoTerminado() {
-    //restableciendo opciones
+    primeraRonda = false;
+
     document.getElementById('reiniciar').removeAttribute('disabled');
-    document.getElementById('intentar').disabled = true
+    document.getElementById('intentar').disabled = true;
 
     htmlTxtUpdate('vidas', `<h3 class="--bs-warning">GAME OVER</h3>`);
-    htmlTxtUpdate('texto-parrafo', `Se esfumaron tus ${vidasDisponibles} intentos`);
+    htmlTxtUpdate('texto-parrafo', `Se esfumaron tus ${vidasDisponibles} chances`);
     htmlImgUpdate("meme", "img/game-over.png");
 }
 
 
 function reiniciarJuego() {
+    if (primeraRonda) {
+        //resetMeme();
+    } else {
+        horaActual();
+    }
     parametrosIniciales();
     limpiarCampo();
-    resetMeme();
+    vidas();
+
 }
 
 function generarNumeroSecreto() {
@@ -133,20 +147,20 @@ function generarNumeroSecreto() {
         // agregar corte de recursividad
     } else {
         numeroSecretoList.push(numeroSecretoTemp);
-        console.log(`Nro Scr. numeroSecretoList[ult]: ${numeroSecretoList[numeroSecretoList.length-1]}`);
+        console.log(`Nro Scr. numeroSecretoList[ult]: ${numeroSecretoList[numeroSecretoList.length - 1]}`);
     }
 }
 
 
 function verificarNumero() {
     let valorUsuario = parseInt(document.getElementById('valorUsuario').value);
-    
+
     if (isNaN(valorUsuario)) {
         htmlTxtUpdate('texto-parrafo', 'Debes ingresar un número');
         htmlImgUpdate("meme", "img/lol.png");
     } else {
         intentos++;
-        if (numeroSecretoList[numeroSecretoList.length-1] == valorUsuario) {
+        if (numeroSecretoList[numeroSecretoList.length - 1] == valorUsuario) {
             if (intentos == 1) {
                 htmlTxtUpdate('texto-parrafo', `Epa! +1 vida`);
                 agregarVida();
@@ -161,14 +175,14 @@ function verificarNumero() {
         } else {
             descontarVida();
             limpiarCampo();
-            if (valorUsuario > numeroSecretoList[numeroSecretoList.length-1]) {
+            if (valorUsuario > numeroSecretoList[numeroSecretoList.length - 1]) {
                 htmlTxtUpdate('texto-parrafo', 'Ole... más bajo');
                 htmlImgUpdate("meme", "img/enojado.png");
             } else {
                 htmlTxtUpdate('texto-parrafo', 'mmm.. mas alto');
                 htmlImgUpdate("meme", "img/enojado.png");
             }
-            
+
             if (vidasDisponibles > 0 && document.getElementById("vidas").children.length === 0) {
                 juegoTerminado();
             }
@@ -186,12 +200,15 @@ function parametrosIniciales() {
     vidasDisponibles = 3;
     puntosTotales = 0;
 
+    htmlTxtUpdate('score', `${puntosTotales}`);
+
+
     document.getElementById('score').value = '';
     document.getElementById('intentar').disabled = false;
     document.getElementById('reiniciar').disabled = true;
 
     generarNumeroSecreto();
-    vidas();
+
 }
 
 
