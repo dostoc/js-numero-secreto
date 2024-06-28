@@ -1,9 +1,11 @@
 let intentos = 1;
 let numeroSecreto = 0;
 let numeroSecretoList = [];
-let maximoNro = 10;
 let vidasDisponibles = 3;
 let puntosTotales = 0;
+
+// numero de jugadas no repetibles..{1,2,3,4,5,6,7,8,9};
+let maximoNro = 9; 
 
 // HTML Intermediarios
 
@@ -49,7 +51,9 @@ function descontarVida() {
 
 function agregarVida() {
     vidasDisponibles++;
+    htmlImgUpdate("meme","img/bravo.jpeg")
     vidas();
+    console.log(`vidasDisponibles: ${vidasDisponibles}`);
 }
 
 
@@ -85,13 +89,14 @@ function textosIniciales() {
 
 // DESARROLLO
 
-function scorer() {
+function scorer(punto) {
     if (intentos == 0) {
-        puntosTotales = puntosTotales + 3;
+        puntosTotales = puntosTotales + punto;
     } else {
-        puntosTotales = puntosTotales + 1;
+        puntosTotales = puntosTotales + punto;
     }
     htmlTxtUpdate('score', `${puntosTotales}`);
+    console.log(`puntos ${puntosTotales}`);
 }
 
 
@@ -119,7 +124,9 @@ function reiniciarJuego() {
 }
 
 function generarNumeroSecreto() {
+
     numeroSecretoTemp = (Math.floor(Math.random() * maximoNro) + 1);
+
     if (numeroSecretoList.includes(numeroSecretoTemp)) {
         if (numeroSecretoList.length == maximoNro) {
             htmlTxtUpdate('texto-parrafo', `Se alcanzó el maximo (${maximoNro}) numero de jugadas`);
@@ -129,7 +136,7 @@ function generarNumeroSecreto() {
         // agregar corte de recursividad
     } else {
         numeroSecretoList.push(numeroSecretoTemp);
-        console.log(numeroSecretoTemp);
+        console.log(`Numero secreto: ${numeroSecretoList[numeroSecretoList.length-1]} desde array-1`);
     }
 }
 
@@ -141,23 +148,23 @@ function verificarNumero() {
         htmlTxtUpdate('texto-parrafo', 'Debes ingresar un número');
         htmlImgUpdate("meme", "img/lol.png");
     } else {
-        if (numeroSecreto === valorUsuario) {
-            if (intentos == 0) {
+        if (numeroSecretoList[numeroSecretoList.length-1] == valorUsuario) {
+            if (intentos == 1) {
                 htmlTxtUpdate('texto-parrafo', `Epa! +1 vida`);
                 agregarVida();
-                scorer();
+                scorer(3);
             } else {
                 htmlTxtUpdate('texto-parrafo', `de casualidad ... en ${(intentos != 0) ? intentos : ''} ${(intentos == 0) ? 'la primera' : 'veces'}`);
                 htmlImgUpdate("meme", "img/feliz.png");
 
-                scorer();
+                scorer(1);
             }
             generarNumeroSecreto();
 
         } else {
             descontarVida();
             limpiarCampo();
-            if (valorUsuario > numeroSecreto) {
+            if (valorUsuario > numeroSecretoList[numeroSecretoList.length-1]) {
                 htmlTxtUpdate('texto-parrafo', 'Ole... más bajo');
                 htmlImgUpdate("meme", "img/enojado.png");
             } else {
@@ -183,8 +190,7 @@ function condicionesIniciales() {
     vidasDisponibles = 3;
     puntosTotales = 0;
 
-    htmlTxtUpdate('score', `${puntosTotales}`);
-
+    document.getElementById('score').value = '';
     document.getElementById('intentar').disabled = false;
     document.getElementById('reiniciar').disabled = true;
 
