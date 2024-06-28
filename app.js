@@ -1,7 +1,7 @@
-let intentos = 1;
+let intentos = 0;
 let numeroSecreto = 0;
 let numeroSecretoList = [];
-let vidasDisponibles = 3;
+let vidasDisponibles = 0;
 let puntosTotales = 0;
 
 // numero de jugadas no repetibles..{1,2,3,4,5,6,7,8,9};
@@ -90,18 +90,15 @@ function textosIniciales() {
 // DESARROLLO
 
 function scorer(punto) {
-    if (intentos == 0) {
-        puntosTotales = puntosTotales + punto;
-    } else {
-        puntosTotales = puntosTotales + punto;
-    }
+    puntosTotales = puntosTotales + punto;
+
+    intentos = 0;
     htmlTxtUpdate('score', `${puntosTotales}`);
     console.log(`puntos ${puntosTotales}`);
 }
 
 
 function juego() {
-    // mensajes iniciales
     textosIniciales();
     reiniciarJuego();
 }
@@ -117,8 +114,8 @@ function juegoTerminado() {
 
 
 function reiniciarJuego() {
+    parametrosIniciales();
     limpiarCampo();
-    condicionesIniciales();
     resetMeme();
 }
 
@@ -135,18 +132,19 @@ function generarNumeroSecreto() {
         // agregar corte de recursividad
     } else {
         numeroSecretoList.push(numeroSecretoTemp);
-        console.log(`Numero secreto: ${numeroSecretoList[numeroSecretoList.length-1]} desde array-1`);
+        console.log(`Nro Scr. numeroSecretoList[ult]: ${numeroSecretoList[numeroSecretoList.length-1]}`);
     }
 }
 
 
 function verificarNumero() {
-    console.log(numeroSecreto);
     let valorUsuario = parseInt(document.getElementById('valorUsuario').value);
+    
     if (isNaN(valorUsuario)) {
         htmlTxtUpdate('texto-parrafo', 'Debes ingresar un número');
         htmlImgUpdate("meme", "img/lol.png");
     } else {
+        intentos++;
         if (numeroSecretoList[numeroSecretoList.length-1] == valorUsuario) {
             if (intentos == 1) {
                 htmlTxtUpdate('texto-parrafo', `Epa! +1 vida`);
@@ -155,7 +153,6 @@ function verificarNumero() {
             } else {
                 htmlTxtUpdate('texto-parrafo', `de casualidad ... en ${(intentos != 0) ? intentos : ''} ${(intentos == 0) ? 'la primera' : 'veces'}`);
                 htmlImgUpdate("meme", "img/feliz.png");
-
                 scorer(1);
             }
             generarNumeroSecreto();
@@ -170,11 +167,10 @@ function verificarNumero() {
                 htmlTxtUpdate('texto-parrafo', 'mmm.. mas alto');
                 htmlImgUpdate("meme", "img/enojado.png");
             }
-            intentos++;
+            
             if (vidasDisponibles > 0 && document.getElementById("vidas").children.length === 0) {
                 juegoTerminado();
             }
-            console.log(`Intentos: ${intentos}`);
         }
         limpiarCampo();
     }
@@ -183,9 +179,9 @@ function verificarNumero() {
 
 
 
-function condicionesIniciales() {
+function parametrosIniciales() {
     // Restableciendo parametros
-    intentos = 1;
+    intentos = 0;
     vidasDisponibles = 3;
     puntosTotales = 0;
 
