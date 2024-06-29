@@ -255,74 +255,28 @@ function matrizPrint() {
 
 // Matrices
 
+const matriz = crearMatriz();
 
-var tabla = [
-    { nombre: "Juan" },
-    { nombre: "Pedro" },
-    { nombre: "Raul" },
-    { nombre: "Simon" },
-    { nombre: "Franco" },
-    { nombre: "German" },
-    { nombre: "Lautaro" },
-    { nombre: "Emi" },
-    { nombre: "Maxi" },
-    { nombre: "Lucas" }
-];
+function dibujarTabla() {
+    const matriz = [];
+    let contador = 1;
 
-var j, x, i;
-var pval;
-window.onload = cargarEventos;
-
-function cargarEventos() {
-    document.getElementById("mostrar-tabla").addEventListener("click", mostrarTabla, false);
-    document.getElementById("cambio-nombres").addEventListener("click", cambiarNombres, false);
-}
-function mostrarTabla() {
-    var cuerpoTabla = document.getElementById("equipos-tabla");
-    var tablaLlena = "";
-    for (var i = 0; i < tabla.length; i++) {
-        tablaLlena += "<tr><td>" + tabla[i].nombre;
+    for (let i = 0; i < (maximoNro-1); i++) {
+        const fila = [];
+        for (let j = 0; j < (maximoNro-1); j++) {
+            fila.push(cont);
+            contador++;
+            
+        }
     }
-    cuerpoTabla.innerHTML = tablaLlena;
+    return matriz
 }
 
-function cambiarNombres(tablaLlena) {
-    for (i = tabla.length - 1; i > 0; i--) {
-        j = Math.floor(Math.random() * (i + 1));
-        x = tabla[i].nombre;
-        tabla[i].nombre = tabla[j].nombre;
-        tabla[j].nombre = x;
-
+function dibujarTabla(){
+    for (let i = 0; i < (maximoNro-1); i++) {
+        for (let j = 0; j < (maximoNro-1); j++) {
+            
+            
+        }
     }
-    pval = "";
-    for (i = 0, j = tabla.length - 1; i < tabla.length / 2; i++, j--) {
-        pval += "<tr>";
-        pval += "<td>" + tabla[i].nombre + "</td>"
-        pval += "<td>" + tabla[j].nombre + "</td>"
-        pval += "</tr>"
     }
-    document.getElementById('pText').innerHTML = pval;
-
-}
-
-
-function mostrarTabla() {
-    var cuerpoTabla = document.getElementById("equipos-tabla");
-    var tablaLlena = "";
-    for (var i = 0; i < tabla.length; i++) {
-        tablaLlena += "<tr><td>" + tabla[i].nombre;
-    }
-    cuerpoTabla.innerHTML = tablaLlena;
-}
-
-
-
-
-
-
-
-
-
-juego();
-
-
