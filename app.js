@@ -261,22 +261,24 @@ function dibujarTabla() {
     const matriz = [];
     let contador = 1;
 
-    for (let i = 0; i < (maximoNro-1); i++) {
+    for (let i = 0; i < (maximoNro - 1); i++) {
         const fila = [];
-        for (let j = 0; j < (maximoNro-1); j++) {
+        for (let j = 0; j < (maximoNro - 1); j++) {
             fila.push(cont);
             contador++;
-            
+
         }
     }
     return matriz
 }
 
-function dibujarTabla(){
-    for (let i = 0; i < (maximoNro-1); i++) {
-        for (let j = 0; j < (maximoNro-1); j++) {
-            
-            
+function dibujarTabla() {
+    for (let i = 0; i < (maximoNro - 1); i++) {
+        for (let j = 0; j < (maximoNro - 1); j++) {
+
+
         }
     }
-    }
+
+    //arbol teclados
+}
